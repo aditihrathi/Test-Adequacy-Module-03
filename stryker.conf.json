@@ -1,0 +1,7 @@
+{
+  "packageManager": "npm",
+  "testRunner": "jest",
+  "reporters": ["clear-text", "progress", "html"],
+  "coverageAnalysis": "perTest",
+  "mutate": ["src/**/*.ts", "!src/**/*.test.ts", "!src/mocksExample/**/*.ts"]
+}

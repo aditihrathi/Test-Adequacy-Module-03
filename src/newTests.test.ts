@@ -46,6 +46,25 @@ new tests for lines 91 and 110
     });
   });
 
+  
+    it("should throw error if studentID and studentName do not match exactly", () => {
+      const idAlice = db.addStudent("Alice");
+      const idBob = db.addStudent("Bob");
+  
+    
+      expect(() => db.getTranscript(idBob, "Alice")).toThrow(
+        "Transcript not found for the given ID and name"
+      );
+  
+   
+      expect(() => db.getTranscript(idAlice, "Bob")).toThrow(
+        "Transcript not found for the given ID and name"
+      );
+  
+      expect(() => db.getTranscript(idAlice, "Alice")).not.toThrow();
+    });
+  
+
 
 
 

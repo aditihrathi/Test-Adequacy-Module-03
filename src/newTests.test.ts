@@ -19,3 +19,18 @@ new tests for lines 91 and 110
       );
     });
   });
+
+
+  describe('getGPA error handling' , () => {
+    it('should throw an error if student has no courses (covers line 110)', () => {
+      const studentName = 'Steve';
+      const studentID = db.addStudent(studentName);
+
+      expect(() => db.getGPA(studentID, studentName)).toThrow(
+        "No courses found for GPA calculation"
+      );
+    });
+  });
+
+
+

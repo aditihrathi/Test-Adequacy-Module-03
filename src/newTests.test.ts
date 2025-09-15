@@ -32,14 +32,19 @@ new tests for lines 91 and 110
     });
 
     /* MUTATIONS:
-- UpdateOperator - non-innocuous because it would lead to non-unique student IDs
-- ConditionalExpression - non-innocuous because it would lead to non-unique student IDs
-- LogicalOperator - OR allows for only a name match, so could match to wrong transcript if there are student's with other names.
- */
+- UpdateOperator 17:42- non-innocuous because it would lead to non-unique student IDs
+- ConditionalExpression 59:84 - non-innocuous because it drops the studentName check, so could match wrong student if students share an ID
+- ConditionalExpression 59:55 - non-innocuous because it drops the studentID check, so could match wrong student if students share an name
+- LogicalOperator 59:55- non-innocuous OR allows for only a name match, so could match to wrong transcript if there are student's with other names.
+- StringLiteral 61:29  - innocuous because it only changes the error message text, not the logic
+- MethodExpression 120:16  - non-innocuous because it changes `.some` to `.every`, so a student with multiple courses would incorrectly not be “enrolled”.
+- ConditionalExpression 120:45  - non-innocuous because changes the check to always `true`, so any student with at least one course looks enrolled in every course.
 
+
+ */
     // updateOperator test
 
-    it("should assign strictly increasing student IDs (updateOperator mutation", () => {
+    it("should assign strictly increasing student IDs (updateOperator mutation)", () => {
       const id1 = db.addStudent("Alice");
       const id2 = db.addStudent("Bob");
       expect(id2).toBeGreaterThan(id1);
@@ -62,6 +67,8 @@ new tests for lines 91 and 110
       );
   
       expect(() => db.getTranscript(idAlice, "Alice")).not.toThrow();
+
+    
     });
   
 

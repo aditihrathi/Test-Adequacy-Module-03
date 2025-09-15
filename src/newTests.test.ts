@@ -30,7 +30,22 @@ new tests for lines 91 and 110
         "No courses found for GPA calculation"
       );
     });
+
+    /* MUTATIONS:
+- UpdateOperator - non-innocuous because it would lead to non-unique student IDs
+- ConditionalExpression - non-innocuous because it would lead to non-unique student IDs
+- LogicalOperator - OR allows for only a name match, so could match to wrong transcript if there are student's with other names.
+ */
+
+    // updateOperator test
+
+    it("should assign strictly increasing student IDs (updateOperator mutation", () => {
+      const id1 = db.addStudent("Alice");
+      const id2 = db.addStudent("Bob");
+      expect(id2).toBeGreaterThan(id1);
+    });
   });
+
 
 
 

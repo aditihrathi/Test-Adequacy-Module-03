@@ -39,6 +39,7 @@ new tests for lines 91 and 110
 - StringLiteral 61:29  - innocuous because it only changes the error message text, not the logic
 - MethodExpression 120:16  - non-innocuous because it changes `.some` to `.every`, so a student with multiple courses would incorrectly not be “enrolled”.
 - ConditionalExpression 120:45  - non-innocuous because changes the check to always `true`, so any student with at least one course looks enrolled in every course.
+- Array Declaration 9:41  - innocous because it is a brittle test and you would have to write out the exact statement in order to.
 
 
  */
@@ -67,9 +68,24 @@ new tests for lines 91 and 110
       );
   
       expect(() => db.getTranscript(idAlice, "Alice")).not.toThrow();
-
     
     });
+  
+    it("should return true if the student is enrolled in at least one course", () => {
+      const studentName = "Alice";
+      const studentID = db.addStudent(studentName);
+  
+      
+      db.addGrade(studentID, studentName, "math", 100);
+      db.addGrade(studentID, studentName, "history", 90);
+  
+
+      expect(db.isEnrolled(studentID, studentName, "math")).toBe(true);
+      expect(db.isEnrolled(studentID, studentName, "history")).toBe(true);
+     
+      expect(db.isEnrolled(studentID, studentName, "science")).toBe(false);
+    });
+
   
 
 
